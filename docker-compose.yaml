@@ -1,0 +1,16 @@
+version: '3'
+services:
+  train:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    command: python src/train.py
+
+  infer:
+    build: .
+    volumes:
+      - ./samples:/app/samples
+      - ./prediction:/app/prediction
+      - ./logs:/app/logs
+    command: python src/infer.py --input_folder samples --output_folder prediction --ckpt_path "/app/logs/dog_breed_classification/version_5/checkpoint/epoch=0-step=3.ckpt"
